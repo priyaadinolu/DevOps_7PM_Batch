@@ -1,5 +1,5 @@
 node {
-    stage('clone java project'){
+    stage('clone java projecttt'){
     git branch: 'main', url: 'https://github.com/priyaadinolu/DevOps_7PM_Batch.git'
     }
     
