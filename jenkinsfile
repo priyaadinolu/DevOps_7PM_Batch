@@ -1,0 +1,39 @@
+pipeline{
+    agent any
+    
+    tools {
+        maven 'mymaven'
+            }
+    
+    stages{
+        
+        stage('Git Clone'){
+            
+            steps{
+               git branch: 'main', url: 'https://github.com/priyaadinolu/DevOps_7PM_Batch.git'
+            }
+        }
+        
+        stage('Build'){
+            steps{
+                sh 'mvn install'
+            }
+        }
+        
+        stage('Docker Build'){
+            steps{
+                sh 'docker build -t priyas2180/myproject10may .'
+            }
+        }
+        
+        stage('Docker Push'){
+            steps{
+                withCredentials([string(credentialsId: 'docker', variable: 'dockerpush')]) {
+                sh 'docker login -u priyas2180 -p ${dockerpush}'
+                }
+                 sh 'docker push priyas2180/myproject10may'
+            }
+           
+        }
+    }
+}
